@@ -1,1 +1,1 @@
-# project-starter-main
+Cloud Infrastructure Deployment for Thumbworx Starter Project
