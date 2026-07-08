@@ -1,2 +1,29 @@
-*
-!.gitignore
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+terraform/terraform.exe
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Laravel
+project-starter-main/vendor/
+project-starter-main/node_modules/
+project-starter-main/storage/logs/*
+project-starter-main/bootstrap/cache/*.php
+
+# Node
+**/node_modules/
+
+# Environment files
+.env
+.env.*

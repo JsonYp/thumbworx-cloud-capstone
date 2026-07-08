@@ -1,0 +1,105 @@
+name: Thumbworx Cloud CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  docker-build:
+
+    name: Docker Build
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: project-starter-main
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t thumbworx-app .
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+  laravel:
+
+    name: Laravel Validation
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: project-starter-main
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install Composer
+        run: composer install --no-interaction
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Validate Routes
+        run: php artisan route:list
+
+  frontend:
+
+    name: Frontend Build
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: project-starter-main
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      - run: npm run build
+
+  terraform:
+
+    name: Terraform Validation
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - run: terraform fmt -check
+
+      - run: terraform init -backend=false
+
+      - run: terraform validate
