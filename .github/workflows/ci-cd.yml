@@ -76,6 +76,8 @@ jobs:
         run: npm ci
 
       - name: Build Frontend
+        env:
+          SKIP_WAYFINDER_GENERATION: '1'
         run: npm run build
 
   terraform:
