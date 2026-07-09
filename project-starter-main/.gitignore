@@ -1,2 +1,21 @@
-*
-!.gitignore
+# Composer
+/vendor/
+
+# Node
+/node_modules/
+
+# Laravel
+/storage/logs/*
+/bootstrap/cache/*.php
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
