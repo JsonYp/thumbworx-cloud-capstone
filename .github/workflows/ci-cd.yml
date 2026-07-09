@@ -46,8 +46,12 @@ jobs:
 
       - name: Prepare Laravel
         run: |
-          cp .env.example .env
-          php artisan key:generate
+          if [ -f .env.example ]; then
+            cp .env.example .env
+          else
+            printf "APP_ENV=local\nAPP_KEY=\nAPP_DEBUG=true\nAPP_URL=http://localhost\n" > .env
+          fi
+          php artisan key:generate --force
           php artisan config:clear
 
       - name: Validate Laravel
